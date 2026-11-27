@@ -40,7 +40,8 @@ const removeSessionForRole = (role) => {
 };
 
 const api = axios.create({
-    baseURL: 'http://localhost:8000',
+    // Set VITE_API_URL to the deployed backend URL; defaults to the local FastAPI server
+    baseURL: import.meta.env.VITE_API_URL || 'http://localhost:8000',
 });
 
 api.interceptors.request.use(
