@@ -1,0 +1,32 @@
+# Secrets — never commit
+.env
+.env.*
+!.env.example
+creds
+creds.*
+*.pem
+*.key
+
+# Local databases (contain user accounts, student data and face embeddings)
+*.db
+*.sqlite
+*.sqlite3
+
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.venv/
+
+# Node / Vite
+node_modules/
+dist/
+
+# Uploaded or generated files served at /static
+backend/static/*
+!backend/static/.gitkeep
+
+# OS / editor
+.DS_Store
+.vscode/
+.idea/
