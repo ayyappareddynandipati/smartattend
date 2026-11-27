@@ -1,3 +1,4 @@
+import logging
 import os
 from pathlib import Path
 from dotenv import load_dotenv
@@ -14,11 +15,14 @@ from app.core import config
 # Load environment variables from .env file
 load_dotenv()
 
+logging.basicConfig(level=logging.INFO, format="%(levelname)s %(name)s: %(message)s")
+logger = logging.getLogger(__name__)
+
 app = FastAPI(title=config.settings.PROJECT_NAME, version="1.0.0")
 
 @app.exception_handler(RequestValidationError)
 async def validation_exception_handler(request, exc):
-    print(f"Validation Error: {exc}")
+    logger.warning("Validation error: %s", exc)
     return JSONResponse(
         status_code=422,
         content={"detail": str(exc)},

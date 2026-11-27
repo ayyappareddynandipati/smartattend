@@ -1,8 +1,11 @@
+import logging
 import os
-import cv2
+
 import numpy as np
 from deepface import DeepFace
 from scipy.spatial.distance import cosine
+
+logger = logging.getLogger(__name__)
 
 # Suppress TensorFlow logging
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
@@ -17,14 +20,7 @@ class FaceRecognitionService:
         return cls._instance
 
     def initialize_models(self):
-        print("FaceRecognitionService: Using DeepFace.")
-        # Optional: Trigger model download/load on startup
-        # try:
-        #     DeepFace.build_model("FaceNet")
-        #     print("DeepFace (FaceNet) initialized.")
-        # except Exception as e:
-        #     print(f"DeepFace init warning: {e}")
-        pass
+        logger.info("FaceRecognitionService: Using DeepFace.")
 
     def preprocess_image(self, image_np):
         """
@@ -44,7 +40,7 @@ class FaceRecognitionService:
                 align=True
             )
         except Exception as e:
-            print(f"DeepFace extraction error: {e}")
+            logger.warning("DeepFace extraction error: %s", e)
             return []
             
         processed_faces = []
@@ -89,7 +85,7 @@ class FaceRecognitionService:
                 return None
             return embeddings[0]["embedding"]
         except Exception as e:
-            print(f"Embedding generation error: {e}")
+            logger.warning("Embedding generation error: %s", e)
             return None
 
     def compute_similarity(self, embed1, embed2):

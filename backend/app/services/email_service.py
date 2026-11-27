@@ -1,8 +1,11 @@
-import smtplib
+import logging
 import os
+import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 def _send_email(to_email: str, student_name: str, subject: str, body: str):
     # Load SMTP config at runtime (after load_dotenv has been called)
@@ -12,35 +15,35 @@ def _send_email(to_email: str, student_name: str, subject: str, body: str):
     SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
     
     if not to_email:
-        print(f"⚠️  Skipping email for {student_name}: No email address provided.")
+        logger.warning("Skipping email for %s: no email address provided.", student_name)
         return
 
     if not SMTP_SERVER or not SMTP_USERNAME or not SMTP_PASSWORD:
-        print(f"⚠️  [MOCK EMAIL - CONFIG MISSING]")
-        print(f"   To: {to_email}")
-        print(f"   Subject: {subject}")
-        print(f"   Body:\n{body}\n")
+        logger.info(
+            "[MOCK EMAIL - SMTP not configured]\n  To: %s\n  Subject: %s\n  Body:\n%s",
+            to_email, subject, body,
+        )
         return
 
     try:
-        print(f"📧 Attempting to send email to {to_email}...")
+        logger.info("Sending email to %s", to_email)
         msg = MIMEMultipart()
         msg['From'] = SMTP_USERNAME
         msg['To'] = to_email
         msg['Subject'] = subject
         msg.attach(MIMEText(body, 'plain'))
         
-        print(f"   Connecting to {SMTP_SERVER}:{SMTP_PORT}...")
+        logger.debug("Connecting to %s:%s", SMTP_SERVER, SMTP_PORT)
         server = smtplib.SMTP(SMTP_SERVER, SMTP_PORT)
         server.starttls()
-        print(f"   Authenticating as {SMTP_USERNAME}...")
+        logger.debug("Authenticating as %s", SMTP_USERNAME)
         server.login(SMTP_USERNAME, SMTP_PASSWORD)
         text = msg.as_string()
         server.sendmail(SMTP_USERNAME, to_email, text)
         server.quit()
-        print(f"✅ Email sent successfully to {to_email}")
+        logger.info("Email sent to %s", to_email)
     except Exception as e:
-        print(f"❌ Failed to send email to {to_email}: {e}")
+        logger.error("Failed to send email to %s: %s", to_email, e)
 
 
 def send_attendance_email(to_email: str, student_name: str, status: str, date_str: str,faculty_name: str,):
