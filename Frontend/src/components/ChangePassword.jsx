@@ -90,7 +90,7 @@ const ChangePassword = ({ open, onClose, onSuccess }) => {
             PaperProps={{
                 sx: {
                     borderRadius: 3,
-                }
+                },
             }}
         >
             <DialogTitle sx={{ pb: 1 }}>
@@ -163,7 +163,11 @@ const ChangePassword = ({ open, onClose, onSuccess }) => {
                                         <Typography variant="caption" color="text.secondary">
                                             Password Strength
                                         </Typography>
-                                        <Typography variant="caption" color={`${getStrengthColor()}.main`} sx={{ fontWeight: 600 }}>
+                                        <Typography
+                                            variant="caption"
+                                            color={`${getStrengthColor()}.main`}
+                                            sx={{ fontWeight: 600 }}
+                                        >
                                             {getStrengthLabel()}
                                         </Typography>
                                     </Box>
@@ -187,9 +191,7 @@ const ChangePassword = ({ open, onClose, onSuccess }) => {
                             disabled={loading}
                             error={confirmPassword && newPassword !== confirmPassword}
                             helperText={
-                                confirmPassword && newPassword !== confirmPassword
-                                    ? 'Passwords do not match'
-                                    : ''
+                                confirmPassword && newPassword !== confirmPassword ? 'Passwords do not match' : ''
                             }
                             InputProps={{
                                 endAdornment: (

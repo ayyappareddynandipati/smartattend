@@ -72,7 +72,7 @@ const Navbar = ({ title = 'Attendance System' }) => {
                                 p: 0.5,
                                 '&:hover': {
                                     backgroundColor: 'action.hover',
-                                }
+                                },
                             }}
                         >
                             <Avatar
@@ -97,7 +97,7 @@ const Navbar = ({ title = 'Attendance System' }) => {
                                 sx: {
                                     mt: 1,
                                     minWidth: 200,
-                                }
+                                },
                             }}
                         >
                             <MenuItem onClick={handleClose} sx={{ gap: 1.5 }}>

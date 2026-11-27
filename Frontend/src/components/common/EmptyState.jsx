@@ -2,12 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import InboxIcon from '@mui/icons-material/Inbox';
 
-const EmptyState = ({
-    icon: Icon = InboxIcon,
-    title = 'No data found',
-    description = '',
-    action = null
-}) => {
+const EmptyState = ({ icon: Icon = InboxIcon, title = 'No data found', description = '', action = null }) => {
     return (
         <Box
             sx={{

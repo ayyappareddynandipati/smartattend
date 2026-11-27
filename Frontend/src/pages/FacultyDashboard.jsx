@@ -72,8 +72,12 @@ const FacultyDashboard = () => {
     const sectionIdRef = useRef(selectedSection);
 
     // Keep refs in sync with state so interval callbacks always read the latest values
-    useEffect(() => { sessionIdRef.current = sessionId; }, [sessionId]);
-    useEffect(() => { sectionIdRef.current = selectedSection; }, [selectedSection]);
+    useEffect(() => {
+        sessionIdRef.current = sessionId;
+    }, [sessionId]);
+    useEffect(() => {
+        sectionIdRef.current = selectedSection;
+    }, [selectedSection]);
 
     useEffect(() => {
         const fetchSections = async () => {
@@ -264,7 +268,12 @@ const FacultyDashboard = () => {
             canvas.height = sourceElement.videoHeight;
         }
 
-        ctx.clearRect(0, 0, canvas.width / (isImagePreview ? (sourceElement.clientWidth / canvas.width) : 1), canvas.height / (isImagePreview ? (sourceElement.clientHeight / canvas.height) : 1));
+        ctx.clearRect(
+            0,
+            0,
+            canvas.width / (isImagePreview ? sourceElement.clientWidth / canvas.width : 1),
+            canvas.height / (isImagePreview ? sourceElement.clientHeight / canvas.height : 1),
+        );
 
         faces.forEach((face) => {
             if (face.bbox) {
@@ -278,9 +287,10 @@ const FacultyDashboard = () => {
 
                 ctx.fillStyle = 'white';
                 ctx.font = '14px Inter';
-                const faceLabel = face.status === 'Identified'
-                    ? `${face.name || face.student?.name || 'Unknown'}${(face.roll_number || face.student?.roll_number) ? ` (${face.roll_number || face.student?.roll_number})` : ''}`
-                    : 'Unknown';
+                const faceLabel =
+                    face.status === 'Identified'
+                        ? `${face.name || face.student?.name || 'Unknown'}${face.roll_number || face.student?.roll_number ? ` (${face.roll_number || face.student?.roll_number})` : ''}`
+                        : 'Unknown';
                 ctx.fillText(faceLabel, x + 5, y - 8);
             }
         });
@@ -339,10 +349,7 @@ const FacultyDashboard = () => {
         <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
             <Navbar title="Faculty Dashboard" />
 
-            <PageHeader
-                title="Attendance Session"
-                subtitle="Real-time face recognition attendance tracking"
-            />
+            <PageHeader title="Attendance Session" subtitle="Real-time face recognition attendance tracking" />
 
             <Container maxWidth="xl" sx={{ py: 4 }}>
                 {/* Stats Cards */}
@@ -468,7 +475,8 @@ const FacultyDashboard = () => {
                                     >
                                         {sections.map((section) => (
                                             <MenuItem key={section.id} value={section.id}>
-                                                {section.name} {section.academic_year ? `- ${section.academic_year}` : ''}
+                                                {section.name}{' '}
+                                                {section.academic_year ? `- ${section.academic_year}` : ''}
                                             </MenuItem>
                                         ))}
                                     </Select>
@@ -498,7 +506,11 @@ const FacultyDashboard = () => {
                                             left: 0,
                                         }}
                                         onLoad={() => {
-                                            if (detectedFaces.length > 0 && uploadedImgRef.current && canvasRef.current) {
+                                            if (
+                                                detectedFaces.length > 0 &&
+                                                uploadedImgRef.current &&
+                                                canvasRef.current
+                                            ) {
                                                 drawBoundingBoxes(detectedFaces, true);
                                             }
                                         }}
@@ -556,12 +568,7 @@ const FacultyDashboard = () => {
                                             sx={{ px: 4, py: 1.5 }}
                                         >
                                             Test From Image
-                                            <input
-                                                type="file"
-                                                hidden
-                                                accept="image/*"
-                                                onChange={handleImageUpload}
-                                            />
+                                            <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
                                         </Button>
                                     </>
                                 ) : (
@@ -585,12 +592,7 @@ const FacultyDashboard = () => {
                                             sx={{ px: 4, py: 1.5 }}
                                         >
                                             Upload Image Frame
-                                            <input
-                                                type="file"
-                                                hidden
-                                                accept="image/*"
-                                                onChange={handleImageUpload}
-                                            />
+                                            <input type="file" hidden accept="image/*" onChange={handleImageUpload} />
                                         </Button>
                                     </>
                                 )}
@@ -652,14 +654,20 @@ const FacultyDashboard = () => {
                                                                 <Chip
                                                                     label={log.status}
                                                                     size="small"
-                                                                    color={log.status === 'Present' ? 'success' : 'default'}
+                                                                    color={
+                                                                        log.status === 'Present' ? 'success' : 'default'
+                                                                    }
                                                                     sx={{ height: 20, fontSize: '0.7rem' }}
                                                                 />
                                                             </Box>
                                                         }
                                                         secondary={
                                                             <Box sx={{ mt: 0.5 }}>
-                                                                <Typography variant="caption" color="text.secondary" display="block">
+                                                                <Typography
+                                                                    variant="caption"
+                                                                    color="text.secondary"
+                                                                    display="block"
+                                                                >
                                                                     {log.roll_number}
                                                                 </Typography>
                                                             </Box>
@@ -689,7 +697,14 @@ const FacultyDashboard = () => {
 
                             <Grid container spacing={2} sx={{ mb: 3 }}>
                                 <Grid item xs={6}>
-                                    <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'success.light', color: 'success.contrastText' }}>
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            textAlign: 'center',
+                                            bgcolor: 'success.light',
+                                            color: 'success.contrastText',
+                                        }}
+                                    >
                                         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                                             {sessionSummary.present_students?.length || 0}
                                         </Typography>
@@ -697,7 +712,14 @@ const FacultyDashboard = () => {
                                     </Paper>
                                 </Grid>
                                 <Grid item xs={6}>
-                                    <Paper sx={{ p: 2, textAlign: 'center', bgcolor: 'error.light', color: 'error.contrastText' }}>
+                                    <Paper
+                                        sx={{
+                                            p: 2,
+                                            textAlign: 'center',
+                                            bgcolor: 'error.light',
+                                            color: 'error.contrastText',
+                                        }}
+                                    >
                                         <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
                                             {sessionSummary.absent_students?.length || 0}
                                         </Typography>

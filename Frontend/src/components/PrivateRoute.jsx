@@ -5,9 +5,7 @@ import { useAuth } from '../context/AuthContext';
 const PrivateRoute = ({ roles }) => {
     const { user, loading, hasRoleSession, switchRole } = useAuth();
     const requiredRoles = roles || [];
-    const matchedRole = requiredRoles.length > 0
-        ? requiredRoles.find((role) => hasRoleSession(role))
-        : user?.role;
+    const matchedRole = requiredRoles.length > 0 ? requiredRoles.find((role) => hasRoleSession(role)) : user?.role;
 
     useEffect(() => {
         if (matchedRole && user?.role !== matchedRole) {
