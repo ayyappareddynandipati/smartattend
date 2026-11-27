@@ -1,15 +1,16 @@
 import logging
 import os
 from pathlib import Path
-from dotenv import load_dotenv
 
-from fastapi import FastAPI
-from fastapi.staticfiles import StaticFiles
-from fastapi.middleware.cors import CORSMiddleware
 import uvicorn
-from app.api import auth, users, students, attendance, sections
+from dotenv import load_dotenv
+from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
+from fastapi.staticfiles import StaticFiles
+
+from app.api import attendance, auth, sections, students, users
 from app.core import config
 
 # Load environment variables from .env file

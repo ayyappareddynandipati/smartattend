@@ -1,0 +1,12 @@
+# Ruff linter config: https://docs.astral.sh/ruff/
+target-version = "py311"
+line-length = 120
+
+[lint]
+# pycodestyle errors, pyflakes, import sorting, bugbear, pyupgrade (safe subset)
+select = ["E", "F", "I", "B"]
+# FastAPI's Depends()/File() in default arguments is idiomatic
+ignore = ["B008", "E501"]
+
+[lint.isort]
+known-first-party = ["app"]

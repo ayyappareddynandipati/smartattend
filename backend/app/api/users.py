@@ -1,11 +1,13 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from typing import List
-from ..core.database import get_db
-from ..models.models import User
-from ..api import deps
-from ..core.security import get_password_hash
+
+from fastapi import APIRouter, Depends, HTTPException
 from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from ..api import deps
+from ..core.database import get_db
+from ..core.security import get_password_hash
+from ..models.models import User
 
 router = APIRouter()
 

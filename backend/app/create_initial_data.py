@@ -1,12 +1,13 @@
-from pathlib import Path
 import sys
+from pathlib import Path
 
 if __package__ is None or __package__ == "":
     sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from app.core.database import Base, SessionLocal, engine
-from app.models.models import AttendanceLog, Embedding, Section, Student, User
 from app.core.security import get_password_hash, verify_password
+from app.models.models import User
+
 
 def init():
     Base.metadata.create_all(bind=engine)

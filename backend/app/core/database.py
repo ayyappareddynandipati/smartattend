@@ -1,7 +1,7 @@
 from pathlib import Path
 
 from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker, declarative_base
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 BACKEND_DIR = Path(__file__).resolve().parents[2]
 DATABASE_FILE = BACKEND_DIR / "attendance.db"

@@ -1,14 +1,15 @@
-from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
-from sqlalchemy.orm import Session
-from typing import List
-import numpy as np
-import cv2
 import pickle
+from typing import List
 
-from ..core.database import get_db
-from ..models.models import Student, Section, Embedding, User
+import cv2
+import numpy as np
+from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile
+from sqlalchemy.orm import Session
+
 from ..api import deps
-from ..services.face_recognition import face_service # Singleton instance
+from ..core.database import get_db
+from ..models.models import Embedding, Section, Student, User
+from ..services.face_recognition import face_service  # Singleton instance
 
 router = APIRouter()
 

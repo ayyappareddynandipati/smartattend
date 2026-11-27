@@ -1,10 +1,11 @@
 from datetime import timedelta
+
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordRequestForm
 from pydantic import BaseModel
 from sqlalchemy.orm import Session
-from app.core import security, config
-from app.api import deps
+
+from app.core import config, security
 from app.core.database import get_db
 from app.models.models import User
 
