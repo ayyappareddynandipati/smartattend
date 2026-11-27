@@ -1,3 +1,4 @@
+import os
 from pathlib import Path
 from dotenv import load_dotenv
 
@@ -23,8 +24,12 @@ async def validation_exception_handler(request, exc):
         content={"detail": str(exc)},
     )
 
-# CORS
-origins = ["http://localhost:5173", "http://localhost:3000"]
+# CORS: comma-separated list in CORS_ORIGINS (e.g. your Vercel URL), local dev ports by default
+origins = [
+    o.strip()
+    for o in os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:3000").split(",")
+    if o.strip()
+]
 app.add_middleware(
     CORSMiddleware,
     allow_origins=origins,
@@ -34,6 +39,7 @@ app.add_middleware(
 )
 
 STATIC_DIR = Path(__file__).resolve().parents[1] / "static"
+STATIC_DIR.mkdir(exist_ok=True)
 app.mount("/static", StaticFiles(directory=str(STATIC_DIR)), name="static")
 
 app.include_router(auth.router, prefix="/auth", tags=["auth"])
