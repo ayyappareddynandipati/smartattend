@@ -192,13 +192,17 @@ async def export_attendance(
         output = io.BytesIO()
         with pd.ExcelWriter(output, engine='openpyxl') as writer:
             df.to_excel(writer, index=False, sheet_name='Attendance')
-        output.seek(0)
-        
         return StreamingResponse(
             iter([output.getvalue()]),
-            media_type="text/csv",
-            headers={"Content-Disposition": f"attachment; filename=attendance_{session_id}.csv"}
+            media_type="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+            headers={"Content-Disposition": f"attachment; filename=attendance_{session_id}.xlsx"}
         )
+
+    return StreamingResponse(
+        iter([df.to_csv(index=False)]),
+        media_type="text/csv",
+        headers={"Content-Disposition": f"attachment; filename=attendance_{session_id}.csv"}
+    )
 
 @router.get("/my-logs")
 def get_my_logs(
