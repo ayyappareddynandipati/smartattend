@@ -1,0 +1,16 @@
+# API + test dependencies without the heavy ML stack (TensorFlow/DeepFace).
+# The face-recognition service is replaced by a stub in tests/conftest.py.
+fastapi
+uvicorn
+sqlalchemy
+python-multipart
+python-jose[cryptography]
+passlib[bcrypt]
+numpy
+opencv-python-headless
+pandas
+openpyxl
+python-dotenv
+httpx
+pytest
+ruff
