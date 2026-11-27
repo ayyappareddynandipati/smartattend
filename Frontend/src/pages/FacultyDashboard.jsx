@@ -59,7 +59,7 @@ const FacultyDashboard = () => {
     const [selectedSection, setSelectedSection] = useState('');
     const [summaryOpen, setSummaryOpen] = useState(false);
     const [sessionSummary, setSessionSummary] = useState(null);
-    const [isRecognizing, setIsRecognizing] = useState(false);
+    const [, setIsRecognizing] = useState(false);
     const [isCompletingSession, setIsCompletingSession] = useState(false);
 
     const webcamRef = useRef(null);

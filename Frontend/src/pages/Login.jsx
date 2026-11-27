@@ -32,7 +32,7 @@ const Login = () => {
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
     const [showPasswordChange, setShowPasswordChange] = useState(false);
-    const [firstLogin, setFirstLogin] = useState(false);
+    const [, setFirstLogin] = useState(false);
     const [forgotOpen, setForgotOpen] = useState(false);
     const [forgotUsername, setForgotUsername] = useState('');
     const [forgotPassword, setForgotPassword] = useState('');
@@ -67,7 +67,7 @@ const Login = () => {
                 form?.classList.add('animate-shake');
                 setTimeout(() => form?.classList.remove('animate-shake'), 500);
             }
-        } catch (err) {
+        } catch {
             setError('An error occurred. Please try again.');
         } finally {
             setLoading(false);
