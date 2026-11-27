@@ -97,7 +97,9 @@ async def enroll_face(
         
         # Generate Embedding
         embedding_vector = face_service.generate_embedding(primary_face)
-        
+        if embedding_vector is None:
+            continue
+
         # Store Embedding
         # Store as binary pickle or bytes
         embed_bytes = pickle.dumps(embedding_vector)
