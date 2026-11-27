@@ -103,22 +103,20 @@ const AdminDashboard = () => {
         const filtered = students.filter(
             (student) =>
                 student.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                student.roll_number.toLowerCase().includes(searchQuery.toLowerCase())
+                student.roll_number.toLowerCase().includes(searchQuery.toLowerCase()),
         );
         setFilteredStudents(filtered);
     }, [searchQuery, students]);
 
     useEffect(() => {
         const filtered = sections.filter((section) =>
-            section.name.toLowerCase().includes(sectionSearchQuery.toLowerCase())
+            section.name.toLowerCase().includes(sectionSearchQuery.toLowerCase()),
         );
         setFilteredSections(filtered);
     }, [sectionSearchQuery, sections]);
 
     useEffect(() => {
-        const filtered = faculty.filter((f) =>
-            f.username.toLowerCase().includes(facultySearchQuery.toLowerCase())
-        );
+        const filtered = faculty.filter((f) => f.username.toLowerCase().includes(facultySearchQuery.toLowerCase()));
         setFilteredFaculty(filtered);
     }, [facultySearchQuery, faculty]);
 
@@ -131,7 +129,7 @@ const AdminDashboard = () => {
     const fetchFaculty = async () => {
         try {
             const res = await api.get('/users/');
-            const facultyList = res.data.filter(u => u.role === 'faculty');
+            const facultyList = res.data.filter((u) => u.role === 'faculty');
             setFaculty(facultyList);
             setFilteredFaculty(facultyList);
         } catch (err) {
@@ -170,7 +168,7 @@ const AdminDashboard = () => {
         const formData = new FormData();
         formData.append('name', newStudent.name);
         formData.append('roll_number', newStudent.roll_number);
-        formData.append('email', newStudent.email || "");
+        formData.append('email', newStudent.email || '');
         formData.append('section_id', newStudent.section_id);
         try {
             const response = await api.post('/students/', formData);
@@ -202,7 +200,7 @@ const AdminDashboard = () => {
         const formData = new FormData();
         formData.append('name', editStudent.name);
         formData.append('roll_number', editStudent.roll_number);
-        formData.append('email', editStudent.email || "");
+        formData.append('email', editStudent.email || '');
         formData.append('section_id', editStudent.section_id);
 
         try {
@@ -323,7 +321,11 @@ const AdminDashboard = () => {
 
     const handleCreateFaculty = async () => {
         try {
-            await api.post('/users/', { username: newFaculty.username, password: newFaculty.password, role: 'faculty' });
+            await api.post('/users/', {
+                username: newFaculty.username,
+                password: newFaculty.password,
+                role: 'faculty',
+            });
             setFacultyOpen(false);
             setNewFaculty({ username: '', password: '' });
             fetchFaculty();
@@ -344,7 +346,7 @@ const AdminDashboard = () => {
     };
 
     const handleViewStudents = (section) => {
-        const sectionStudents = students.filter(s => s.section_id === section.id);
+        const sectionStudents = students.filter((s) => s.section_id === section.id);
         setViewStudentsList(sectionStudents);
         setSelectedSectionName(section.name);
         setViewStudentsDialogOpen(true);
@@ -358,10 +360,7 @@ const AdminDashboard = () => {
         <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
             <Navbar title="Admin Dashboard" />
 
-            <PageHeader
-                title="Dashboard"
-                subtitle="Manage students, sections, and enrollments"
-            />
+            <PageHeader title="Dashboard" subtitle="Manage students, sections, and enrollments" />
 
             <Container maxWidth="xl" sx={{ py: 4 }}>
                 {/* Stats Cards */}
@@ -600,7 +599,11 @@ const AdminDashboard = () => {
                                 title="No sections found"
                                 description="Create your first section to organize students"
                                 action={
-                                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => setSectionOpen(true)}>
+                                    <Button
+                                        variant="contained"
+                                        startIcon={<AddIcon />}
+                                        onClick={() => setSectionOpen(true)}
+                                    >
                                         Add Section
                                     </Button>
                                 }
@@ -624,12 +627,20 @@ const AdminDashboard = () => {
                                                 <TableCell>{section.academic_year}</TableCell>
                                                 <TableCell align="right">
                                                     <Tooltip title="View Students">
-                                                        <IconButton size="small" color="info" onClick={() => handleViewStudents(section)}>
+                                                        <IconButton
+                                                            size="small"
+                                                            color="info"
+                                                            onClick={() => handleViewStudents(section)}
+                                                        >
                                                             <Visibility />
                                                         </IconButton>
                                                     </Tooltip>
                                                     <Tooltip title="Edit">
-                                                        <IconButton size="small" color="primary" onClick={() => openEditDialog(section)}>
+                                                        <IconButton
+                                                            size="small"
+                                                            color="primary"
+                                                            onClick={() => openEditDialog(section)}
+                                                        >
                                                             <EditIcon />
                                                         </IconButton>
                                                     </Tooltip>
@@ -686,7 +697,11 @@ const AdminDashboard = () => {
                                 title="No faculty found"
                                 description="Add faculty members to the system"
                                 action={
-                                    <Button variant="contained" startIcon={<AddIcon />} onClick={() => setFacultyOpen(true)}>
+                                    <Button
+                                        variant="contained"
+                                        startIcon={<AddIcon />}
+                                        onClick={() => setFacultyOpen(true)}
+                                    >
                                         Add Faculty
                                     </Button>
                                 }
@@ -698,14 +713,18 @@ const AdminDashboard = () => {
                                         <TableRow>
                                             <TableCell sx={{ fontWeight: 600 }}>Username</TableCell>
                                             <TableCell sx={{ fontWeight: 600 }}>Role</TableCell>
-                                            <TableCell align="right" sx={{ fontWeight: 600 }}>Actions</TableCell>
+                                            <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                                Actions
+                                            </TableCell>
                                         </TableRow>
                                     </TableHead>
                                     <TableBody>
                                         {filteredFaculty.map((fac) => (
                                             <TableRow key={fac.id} hover>
                                                 <TableCell>{fac.username}</TableCell>
-                                                <TableCell><Chip label="Faculty" size="small" color="primary" /></TableCell>
+                                                <TableCell>
+                                                    <Chip label="Faculty" size="small" color="primary" />
+                                                </TableCell>
                                                 <TableCell align="right">
                                                     <Tooltip title="Delete">
                                                         <IconButton
@@ -1059,10 +1078,13 @@ const AdminDashboard = () => {
             </Dialog>
 
             {/* View Students in Section Dialog */}
-            <Dialog open={viewStudentsDialogOpen} onClose={() => setViewStudentsDialogOpen(false)} maxWidth="md" fullWidth>
-                <DialogTitle sx={{ fontWeight: 600 }}>
-                    Students in {selectedSectionName}
-                </DialogTitle>
+            <Dialog
+                open={viewStudentsDialogOpen}
+                onClose={() => setViewStudentsDialogOpen(false)}
+                maxWidth="md"
+                fullWidth
+            >
+                <DialogTitle sx={{ fontWeight: 600 }}>Students in {selectedSectionName}</DialogTitle>
                 <DialogContent>
                     {viewStudentsList.length === 0 ? (
                         <EmptyState
@@ -1077,7 +1099,9 @@ const AdminDashboard = () => {
                                         <TableCell sx={{ fontWeight: 600 }}>Name</TableCell>
                                         <TableCell sx={{ fontWeight: 600 }}>Roll Number</TableCell>
                                         <TableCell sx={{ fontWeight: 600 }}>Status</TableCell>
-                                        <TableCell align="right" sx={{ fontWeight: 600 }}>Actions</TableCell>
+                                        <TableCell align="right" sx={{ fontWeight: 600 }}>
+                                            Actions
+                                        </TableCell>
                                     </TableRow>
                                 </TableHead>
                                 <TableBody>
@@ -1098,10 +1122,14 @@ const AdminDashboard = () => {
                                                         size="small"
                                                         color="error"
                                                         onClick={() => {
-                                                            if (window.confirm('Delete this student from the section?')) {
+                                                            if (
+                                                                window.confirm('Delete this student from the section?')
+                                                            ) {
                                                                 handleDeleteStudent(student.id);
                                                                 // Update the local list to reflect deletion immediately
-                                                                setViewStudentsList(prev => prev.filter(s => s.id !== student.id));
+                                                                setViewStudentsList((prev) =>
+                                                                    prev.filter((s) => s.id !== student.id),
+                                                                );
                                                             }
                                                         }}
                                                     >
@@ -1122,12 +1150,7 @@ const AdminDashboard = () => {
             </Dialog>
 
             {/* Student Credentials Dialog */}
-            <Dialog
-                open={credentialsDialog}
-                onClose={() => setCredentialsDialog(false)}
-                maxWidth="sm"
-                fullWidth
-            >
+            <Dialog open={credentialsDialog} onClose={() => setCredentialsDialog(false)} maxWidth="sm" fullWidth>
                 <DialogTitle sx={{ fontWeight: 600, bgcolor: 'success.light', color: 'white' }}>
                     ✅ Student Account Created
                 </DialogTitle>
@@ -1135,7 +1158,8 @@ const AdminDashboard = () => {
                     {studentCredentials && (
                         <Box>
                             <Alert severity="info" sx={{ mb: 3 }}>
-                                Share these credentials with the student. They will be required to change their password on first login.
+                                Share these credentials with the student. They will be required to change their password
+                                on first login.
                             </Alert>
 
                             <Paper sx={{ p: 3, bgcolor: 'grey.50', border: '1px dashed', borderColor: 'grey.300' }}>
@@ -1174,22 +1198,19 @@ const AdminDashboard = () => {
                             </Paper>
 
                             <Alert severity="warning" sx={{ mt: 3 }}>
-                                <strong>Important:</strong> The student must change this password on their first login for security.
+                                <strong>Important:</strong> The student must change this password on their first login
+                                for security.
                             </Alert>
                         </Box>
                     )}
                 </DialogContent>
                 <DialogActions sx={{ p: 2.5 }}>
-                    <Button
-                        variant="contained"
-                        onClick={() => setCredentialsDialog(false)}
-                        fullWidth
-                    >
+                    <Button variant="contained" onClick={() => setCredentialsDialog(false)} fullWidth>
                         Got it
                     </Button>
                 </DialogActions>
             </Dialog>
-        </Box >
+        </Box>
     );
 };
 

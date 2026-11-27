@@ -17,12 +17,7 @@ import {
     DialogContent,
     DialogActions,
 } from '@mui/material';
-import {
-    Visibility,
-    VisibilityOff,
-    Login as LoginIcon,
-    FingerprintOutlined,
-} from '@mui/icons-material';
+import { Visibility, VisibilityOff, Login as LoginIcon, FingerprintOutlined } from '@mui/icons-material';
 import ChangePassword from '../components/ChangePassword';
 
 const Login = () => {
@@ -129,7 +124,9 @@ const Login = () => {
                 username: normalizedUsername,
                 new_password: forgotPassword,
             });
-            setForgotSuccess(response.data?.message || 'Password reset successfully. Please login with your new password.');
+            setForgotSuccess(
+                response.data?.message || 'Password reset successfully. Please login with your new password.',
+            );
             setPassword('');
         } catch (err) {
             setForgotError(err.response?.data?.detail || 'Failed to reset password');
@@ -137,7 +134,6 @@ const Login = () => {
             setForgotLoading(false);
         }
     };
-
 
     return (
         <Box
@@ -229,7 +225,6 @@ const Login = () => {
                             Sign in to continue to your account
                         </Typography>
                     </Box>
-
 
                     {error && (
                         <Alert severity="error" sx={{ mb: 3, borderRadius: 2 }}>
@@ -358,18 +353,16 @@ const Login = () => {
                     </Box>
                 </DialogContent>
                 <DialogActions>
-                    <Button onClick={closeForgotPasswordDialog} disabled={forgotLoading}>Cancel</Button>
+                    <Button onClick={closeForgotPasswordDialog} disabled={forgotLoading}>
+                        Cancel
+                    </Button>
                     <Button variant="contained" onClick={handleForgotPasswordSubmit} disabled={forgotLoading}>
                         {forgotLoading ? 'Resetting...' : 'Reset Password'}
                     </Button>
                 </DialogActions>
             </Dialog>
 
-            <ChangePassword
-                open={showPasswordChange}
-                onClose={() => { }}
-                onSuccess={handlePasswordChangeSuccess}
-            />
+            <ChangePassword open={showPasswordChange} onClose={() => {}} onSuccess={handlePasswordChangeSuccess} />
         </Box>
     );
 };

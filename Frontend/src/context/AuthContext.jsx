@@ -76,7 +76,7 @@ export const AuthProvider = ({ children }) => {
             applySessionState(nextSessions, role);
             return { success: true, first_login: Boolean(first_login), role };
         } catch (error) {
-            console.error("Login failed", error);
+            console.error('Login failed', error);
             return { success: false };
         }
     };

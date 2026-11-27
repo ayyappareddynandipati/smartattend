@@ -17,12 +17,7 @@ import {
     TableRow,
     LinearProgress,
 } from '@mui/material';
-import {
-    CheckCircle,
-    DateRange,
-    TrendingUp,
-    Schedule,
-} from '@mui/icons-material';
+import { CheckCircle, DateRange, TrendingUp, Schedule } from '@mui/icons-material';
 import Navbar from '../components/layout/Navbar';
 import PageHeader from '../components/layout/PageHeader';
 import EmptyState from '../components/common/EmptyState';
@@ -48,13 +43,13 @@ const StudentDashboard = () => {
             setLogs(data);
 
             const total = data.length;
-            const present = data.filter(log => log.status === 'Present').length;
+            const present = data.filter((log) => log.status === 'Present').length;
             const percentage = total > 0 ? (present / total) * 100 : 0;
 
             setStats({
                 totalClasses: total,
                 present: present,
-                attendancePercentage: percentage
+                attendancePercentage: percentage,
             });
         } catch (error) {
             console.error('Failed to fetch attendance logs', error);
@@ -69,10 +64,7 @@ const StudentDashboard = () => {
         <Box sx={{ minHeight: '100vh', backgroundColor: 'background.default' }}>
             <Navbar title="Student Dashboard" />
 
-            <PageHeader
-                title="My Attendance"
-                subtitle="Track your attendance records and statistics"
-            />
+            <PageHeader title="My Attendance" subtitle="Track your attendance records and statistics" />
 
             <Container maxWidth="xl" sx={{ py: 4 }}>
                 {/* Stats Cards */}
