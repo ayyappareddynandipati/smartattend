@@ -1,18 +1,18 @@
-from fastapi import APIRouter, BackgroundTasks, Depends, HTTPException, UploadFile, File, Form
-from sqlalchemy.orm import Session
-from typing import List
 import pickle
-import numpy as np
+from datetime import datetime, timedelta, timezone
+
 import cv2
-from datetime import datetime, timezone, timedelta
+import numpy as np
+from fastapi import APIRouter, BackgroundTasks, Depends, File, Form, HTTPException, UploadFile
+from sqlalchemy.orm import Session
+
+from ..api import deps
+from ..core.database import get_db
+from ..models.models import AttendanceLog, Section, Student, User
+from ..services.email_service import send_attendance_email, send_attendance_marked_email
+from ..services.face_recognition import face_service
 
 IST = timezone(timedelta(hours=5, minutes=30))
-
-from ..core.database import get_db
-from ..models.models import AttendanceLog, Student, Embedding, Section, User
-from ..api import deps
-from ..services.face_recognition import face_service
-from ..services.email_service import send_attendance_email, send_attendance_marked_email
 
 router = APIRouter()
 
@@ -162,9 +162,10 @@ async def export_attendance(
     current_user: User = Depends(deps.get_current_user)
 ):
     """Export attendance report as CSV or Excel"""
+    import io
+
     import pandas as pd
     from fastapi.responses import StreamingResponse
-    import io
     
     # Get attendance logs with student details
     logs = db.query(AttendanceLog).filter(AttendanceLog.session_id == session_id).all()

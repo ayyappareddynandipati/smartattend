@@ -1,10 +1,12 @@
-from fastapi import APIRouter, Depends, HTTPException
-from sqlalchemy.orm import Session
 from typing import List
+
+from fastapi import APIRouter, Depends, HTTPException
+from pydantic import BaseModel
+from sqlalchemy.orm import Session
+
+from ..api import deps
 from ..core.database import get_db
 from ..models.models import Section, User
-from ..api import deps
-from pydantic import BaseModel
 
 router = APIRouter()
 
